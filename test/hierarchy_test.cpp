@@ -13,7 +13,7 @@ TEST_CASE("Page & Node Checks", "[Hierarchy]")
 {
     GIVEN("A valid input stream")
     {
-        int64_t root_hier_offset = 93169718;
+        int64_t root_hier_offset = 93161718;
         int32_t root_hier_size = 8896;
 
         fstream in_stream;
