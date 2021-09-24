@@ -20,7 +20,8 @@ WriterInternal::WriterInternal(std::ostream &out_stream, const std::shared_ptr<C
     size_t eb_offset = file_->GetExtraBytes().size();
     OFFSET_TO_POINT_DATA += eb_offset + las::VlrHeader().Size;
     // reserve enough space for the header & VLRs in the file
-    char out_arr[FIRST_CHUNK_OFFSET()];
+    const uint64_t chunk_offset = FIRST_CHUNK_OFFSET();
+    char out_arr[chunk_offset];
     std::memset(out_arr, 0, sizeof(out_arr));
     out_stream_.write(out_arr, sizeof(out_arr));
     open_ = true;
