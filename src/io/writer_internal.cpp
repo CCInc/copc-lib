@@ -1,4 +1,5 @@
 #include <cstring>
+#include <iterator>
 
 #include <copc-lib/io/internal/writer_internal.hpp>
 #include <copc-lib/laz/compressor.hpp>
@@ -20,15 +21,7 @@ WriterInternal::WriterInternal(std::ostream &out_stream, const std::shared_ptr<C
     size_t eb_offset = file_->GetExtraBytes().size();
     OFFSET_TO_POINT_DATA += eb_offset + las::VlrHeader().Size;
     // reserve enough space for the header & VLRs in the file
-#if _MSC_VER
-    // msvc compiler doesn't like pre-computing the value of FIRST_CHUNK_OFFSET
-    // 375 + (54 + 160) + (54 + (34 + 4 * 6)) + sizeof(uint64_t) = 709
-    char out_arr[709];
-#elif
-    char out_arr[FIRST_CHUNK_OFFSET()];
-#endif
-    std::memset(out_arr, 0, sizeof(out_arr));
-    out_stream_.write(out_arr, sizeof(out_arr));
+    std::fill_n(std::ostream_iterator<char>(out_stream_), FIRST_CHUNK_OFFSET(), 0);
     open_ = true;
 }
 
