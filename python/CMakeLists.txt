@@ -1,7 +1,7 @@
 set (COPC_PYTHON_LIB copclib)
 
 find_package(lazperf REQUIRED)
-find_package(copclib CONFIG REQUIRED)
+find_package(copc-lib CONFIG REQUIRED)
 find_package(pybind11 CONFIG)
 
 include(helpers NO_POLICY_SCOPE)

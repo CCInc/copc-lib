@@ -11,7 +11,7 @@ include(CMakeFindDependencyMacro)
 find_dependency(lazperf 2.1.0 REQUIRED)
 
 if(NOT TARGET COPCLIB::copc-lib)
-    include("${copclib_CMAKE_DIR}/copc-lib-targets.cmake")
+    include("${copc-lib_CMAKE_DIR}/copc-lib-targets.cmake")
 endif()
 
 check_required_components(copclib)

@@ -1,5 +1,5 @@
 find_package(lazperf REQUIRED)
-find_package(copclib REQUIRED)
+find_package(copc-lib REQUIRED)
 
 include(helpers NO_POLICY_SCOPE)
 download_test_files("${CMAKE_CURRENT_BINARY_DIR}/autzen-classified.copc.laz")

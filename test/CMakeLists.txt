@@ -1,5 +1,5 @@
 find_package(lazperf REQUIRED)
-find_package(copclib CONFIG REQUIRED)
+find_package(copc-lib CONFIG REQUIRED)
 find_package(Catch2 REQUIRED)
 
 include(helpers NO_POLICY_SCOPE)

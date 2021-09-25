@@ -13,7 +13,7 @@ set(INSTALL_LIBRARY_DIR ${CMAKE_INSTALL_LIBDIR}/${COPC_NAMESPACE}/${CMAKE_BUILD_
 set(INSTALL_ARCHIVE_DIR ${CMAKE_INSTALL_LIBDIR}/${COPC_NAMESPACE}/${CMAKE_BUILD_TYPE}/static)
 set(INSTALL_INCLUDE_DIR ${CMAKE_INSTALL_INCLUDEDIR}/${COPC_NAMESPACE}/${COPC_SHARED_LIB})
 
-set(PROJECT_CONFIG_FILE "${PROJECT_BINARY_DIR}/${COPC_NAMESPACE}-config.cmake")
+set(PROJECT_CONFIG_FILE "${PROJECT_BINARY_DIR}/${COPC_SHARED_LIB}-config.cmake")
 
 # Compilation options
 set(WITH_TESTS TRUE CACHE BOOL "Choose if unit tests should be built")
@@ -118,4 +118,4 @@ install(EXPORT ${COPC_SHARED_LIB}-targets
 
 # Register the package in the user's package registry.
 # https://cmake.org/cmake/help/v3.11/command/export.html
-export(PACKAGE ${COPC_NAMESPACE})
+export(PACKAGE ${COPC_SHARED_LIB})
