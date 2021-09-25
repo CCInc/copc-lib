@@ -5,7 +5,6 @@
 #include <string>
 
 #include <copc-lib/copc/file.hpp>
-#include <copc-lib/hierarchy/internal/hierarchy.hpp>
 #include <copc-lib/hierarchy/node.hpp>
 #include <copc-lib/hierarchy/page.hpp>
 #include <copc-lib/io/base_io.hpp>
@@ -14,6 +13,11 @@
 
 namespace copc
 {
+namespace Internal
+{
+class PageInternal;
+} // namespace Internal
+
 class Reader : public BaseIO
 {
   public:

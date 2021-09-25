@@ -2,13 +2,18 @@
 #define COPCLIB_IO_BASE_H_
 
 #include <copc-lib/copc/file.hpp>
-#include <copc-lib/hierarchy/internal/hierarchy.hpp>
 #include <copc-lib/hierarchy/node.hpp>
 #include <copc-lib/hierarchy/page.hpp>
 #include <copc-lib/las/vlr.hpp>
 
 namespace copc
 {
+namespace Internal
+{
+class Hierarchy;
+class PageInternal;
+} // namespace Internal
+
 // Base class for all IO reader/writers
 class BaseIO
 {

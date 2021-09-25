@@ -1,8 +1,8 @@
 find_package(lazperf REQUIRED)
-find_package(copc-lib QUIET)
+find_package(copclib CONFIG REQUIRED)
 find_package(Catch2 REQUIRED)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/helpers.cmake NO_POLICY_SCOPE)
+include(helpers NO_POLICY_SCOPE)
 download_test_files("${CMAKE_CURRENT_BINARY_DIR}/autzen-classified.copc.laz")
 
 file(GLOB TEST_SRCS
@@ -10,7 +10,7 @@ file(GLOB TEST_SRCS
         )
 
 add_executable(tests ${TEST_SRCS})
-target_link_libraries(tests copc-lib LAZPERF::lazperf Catch2::Catch2)
+target_link_libraries(tests COPCLIB::copc-lib LAZPERF::lazperf Catch2::Catch2)
 
 include(CTest)
 include(Catch)

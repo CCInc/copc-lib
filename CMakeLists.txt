@@ -1,40 +1,32 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(copc-lib VERSION 1.2.0)
+cmake_minimum_required(VERSION 3.9)
 
-find_package(lazperf REQUIRED)
-
-set (COPC_SHARED_LIB copc-lib)
-set (COPC_STATIC_LIB copc-lib-s)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+# options to configure the library with.
+option(WITH_TESTS "Build test files." ON)
+option(WITH_EXAMPLES "Build example files." ON)
+option(WITH_PYTHON "Build python bindings." ON)
 
 # Path to additional CMake modules
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
-include_directories(include)
+# If no build type was specified, set it to Release.
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING
+            "Choose the type of build, options are: None Debug Release."
+            FORCE)
+endif(NOT CMAKE_BUILD_TYPE)
 
-file(GLOB_RECURSE SRCS
-        src/*.cpp
-        )
+# If no installation prefix is given manually, install locally.
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE STRING
+            "The install location"
+            FORCE)
+endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
-if (NOT EMSCRIPTEN)
-    add_library(${COPC_SHARED_LIB} SHARED ${SRCS})
-    target_link_libraries(${COPC_SHARED_LIB} LAZPERF::lazperf)
-    target_include_directories(${COPC_SHARED_LIB} INTERFACE $<INSTALL_INTERFACE:include>)
-endif()
+add_subdirectory(cpp)
 
-add_library(${COPC_STATIC_LIB} STATIC ${SRCS})
-target_link_libraries(${COPC_STATIC_LIB} LAZPERF::lazperf)
-
-# Choose package components
-set(WITH_TESTS TRUE CACHE BOOL "Choose if unit tests should be built")
-set(WITH_EXAMPLES TRUE CACHE BOOL "Choose if examples should be built")
-set(WITH_PYTHON TRUE CACHE BOOL "Choose if python bindings should be built")
-
+# Build Submodules
 if (WITH_TESTS OR WITH_EXAMPLES OR WITH_PYTHON)
-    include(${CMAKE_SOURCE_DIR}/cmake/helpers.cmake NO_POLICY_SCOPE)
+    include(helpers NO_POLICY_SCOPE)
 
     download_test_files("${CMAKE_BINARY_DIR}/autzen-classified.copc.laz")
     set(BaseAutzenFilePath "${CMAKE_BINARY_DIR}/autzen-classified.copc.laz")
@@ -55,28 +47,4 @@ endif()
 
 if(WITH_PYTHON)
     add_subdirectory(python)
-endif()
-
-# Install
-set(include_dest "include/copc-lib")
-set(lib_dest "lib/cmake/copc-lib")
-
-if (NOT EMSCRIPTEN)
-
-    ## Targets
-    install(TARGETS ${COPC_SHARED_LIB} EXPORT ${COPC_SHARED_LIB} LIBRARY DESTINATION lib)
-    ## Export
-    install(FILES cmake/copc-lib-config.cmake DESTINATION ${lib_dest})
-    install(EXPORT ${COPC_SHARED_LIB} DESTINATION "${lib_dest}")
-    ## Headers
-    file(GLOB_RECURSE HDRS
-            include/*.hpp
-            )
-    ### Reproduce the folder hierarchy of include/* in destination
-    foreach(HDR IN LISTS HDRS)
-        get_filename_component(FILE_DIR ${HDR} DIRECTORY)
-        file(RELATIVE_PATH REL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include" "${FILE_DIR}")
-        install(FILES ${HDR} DESTINATION "include/${REL_PATH}")
-    endforeach()
-
 endif()

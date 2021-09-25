@@ -1,4 +1,6 @@
 #include <copc-lib/io/base_io.hpp>
+#include <copc-lib/hierarchy/internal/hierarchy.hpp>
+#include <copc-lib/hierarchy/internal/page.hpp>
 
 namespace copc
 {

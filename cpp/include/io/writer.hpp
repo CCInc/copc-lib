@@ -8,12 +8,15 @@
 
 #include <copc-lib/copc/file.hpp>
 #include <copc-lib/io/base_io.hpp>
-#include <copc-lib/io/internal/writer_internal.hpp>
 #include <copc-lib/las/header.hpp>
 #include <copc-lib/las/points.hpp>
 
 namespace copc
 {
+namespace Internal
+{
+class WriterInternal;
+}
 
 // Provides the public interface for writing COPC files
 class Writer : public BaseIO
